@@ -1,3 +1,4 @@
+// Promise below
 d3.json("data/samples.json").then((data) => {
     var top10OTUSubarray = [];
     var top10OTUArray = [];
@@ -69,20 +70,55 @@ d3.json("data/samples.json").then((data) => {
         document.getElementById("selDataset").appendChild(option);
     };
 
+    // // Reverse the array due to Plotly's defaults
+    // data = data.reverse();
+    // sadly, this would not work for me
+    
     // Initializes the page with a default plot
-    function init() {
-        data = [{
+    function initHBar() {
+        var hData = [{
             type: "bar",
             x: [163, 126, 113, 78, 71, 51, 50, 47, 40, 40],
             y: ["OTU 1167", "OTU 2859", "OTU 482", "OTU 2264", "OTU 41", "OTU 1189", "OTU 352", "OTU 189", "OTU 2318", "OTU 1977"],
             text: ["Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Porphyromonadaceae;Porphyromonas", "Bacteria;Firmicutes;Clostridia;Clostridiales;IncertaeSedisXI;Peptoniphilus", "Bacteria", "Bacteria;Firmicutes;Clostridia;Clostridiales;IncertaeSedisXI", "Bacteria", "Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Porphyromonadaceae;Porphyromonas", "Bacteria", "Bacteria", "Bacteria;Firmicutes;Clostridia;Clostridiales;IncertaeSedisXI;Anaerococcus", "Bacteria;Firmicutes;Clostridia;Clostridiales"],
             orientation: "h" }];
-        var layout = {
+        var hLayout = {
             title: "Top 10 OTUs for Each Individual",
             xaxis: { title: "Sample Values" },
             yaxis: { title: "OTU IDs"} };
-        Plotly.newPlot("plot", data, layout);
+        Plotly.newPlot("bar", hData, hLayout);
     };
+
+    xValues = []
+    yValues = []
+    for (i = 0; i < data.samples.length; i++) {
+        xValues.push(data.samples[i].otu_ids);
+        yValues.push(data.samples[i].sample_values);
+    };
+    function initBubble() {
+        var bubbleData = [{
+            x: xValues[0],
+            y: yValues[0],
+            mode: "markers",
+            marker: {
+                size: yValues[0],
+                color: xValues[0],
+                text: OTULabelArray[0]
+            }
+        }];
+        var bubbleLayout = {
+            title: 'Marker Size and Color',
+            showlegend: false,
+        };
+        Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+    };
+    function initDemographicInfo() {
+        var node = document.createElement("p");
+        firstMetadataObject = JSON.stringify(data.metadata[0]).replace(/{|}|"/g, '').replace(/,/g, '\n');
+        var textNode = document.createTextNode(`${firstMetadataObject}`);
+        node.appendChild(textNode);
+        document.getElementById("sample-metadata").appendChild(node);
+    }
 
     // make this a global variable for use inside the function below
     var namesArray = data.names;
@@ -98,13 +134,29 @@ d3.json("data/samples.json").then((data) => {
         // Note the extra brackets around 'x' and 'y'
         for (i = 0; i < namesArray.length; i++) {
             if (dataset === namesArray[i]) {
-                x = top10OTUArray[i]
-                y = OTUIDArray[i]
-                text = OTULabelArray[i]
+                var updateHBar = {
+                    x: [top10OTUArray[i]],
+                    y: [OTUIDArray[i]],
+                    marker: {
+                        text: OTULabelArray[i]
+                    }
+                }
+                var updateBubble = {
+                    x: [xValues[i]],
+                    y: [yValues[i]],
+                    marker: {
+                        size: yValues[i],
+                        color: xValues[i],
+                        text: OTULabelArray[i]
+                    }
+                };
+                document.getElementById("sample-metadata").textContent = `${JSON.stringify(data.metadata[i]).replace(/{|}|"/g, "").replace(/,/g, "\n")}`;
             };
         };
-        Plotly.restyle("plot", "x", [x]);
-        Plotly.restyle("plot", "y", [y]);
+        Plotly.restyle("bar", updateHBar);
+        Plotly.restyle("bubble", updateBubble); 
     };
-    init();
+    initHBar();
+    initBubble();
+    initDemographicInfo();
 });
