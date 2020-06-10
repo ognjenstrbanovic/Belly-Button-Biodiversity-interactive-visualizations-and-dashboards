@@ -1,4 +1,4 @@
-// Promise below
+// Promise below; specifies path and uses arbitrary 'data' parameter for accessing json file data
 d3.json("data/samples.json").then((data) => {
     var top10OTUSubarray = [];
     var top10OTUArray = [];
