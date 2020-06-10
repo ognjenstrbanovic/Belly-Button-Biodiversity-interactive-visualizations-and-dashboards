@@ -63,7 +63,7 @@ d3.json("data/samples.json").then((data) => {
     };
     // I assume that all three of the above nested for loops could have been more easily done w/ a forEach or map, but I was not comfortable w/ them yet
 
-    // creating option elements
+    // creating option elements w/out D3.js
     for (i = 0; i < data.names.length; i++) {
         var option = document.createElement("option");
         option.value = `${data.names[i]}`;
@@ -73,7 +73,7 @@ d3.json("data/samples.json").then((data) => {
 
     // // Reverse the array due to Plotly's defaults
     // data = data.reverse();
-    // sadly, this would not work for me
+    // // sadly, this would not work for me
     
     // Initializes the page with a default plot
     function initHBar() {
@@ -121,7 +121,7 @@ d3.json("data/samples.json").then((data) => {
         document.getElementById("sample-metadata").appendChild(node);
     }
 
-    // make this a global variable for use inside the function below
+    // make this a global variable for use inside the function below (instead of local - unaccessable to me)
     var namesArray = data.names;
 
     // Call updatePlotly() when a change takes place to the DOM
@@ -154,9 +154,11 @@ d3.json("data/samples.json").then((data) => {
                 document.getElementById("sample-metadata").textContent = `${JSON.stringify(data.metadata[i]).replace(/{|}|"/g, "").replace(/,/g, "\n")}`;
             };
         };
+        // for continuous restyling
         Plotly.restyle("bar", updateHBar);
         Plotly.restyle("bubble", updateBubble); 
     };
+    // call all functions below
     initHBar();
     initBubble();
     initDemographicInfo();
