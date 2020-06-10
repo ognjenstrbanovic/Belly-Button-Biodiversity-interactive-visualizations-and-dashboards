@@ -2,6 +2,7 @@
 d3.json("data/samples.json").then((data) => {
     var top10OTUSubarray = [];
     var top10OTUArray = [];
+    // I assume that while the below works (and is a solution), it is poor in terms of time complexity...
     for (var i = 0; i < data.samples.length; i++) {
         if (data.samples[i].sample_values.length >= 10) {
             for (var j = 0; j < 10; j++) {
@@ -60,7 +61,7 @@ d3.json("data/samples.json").then((data) => {
             };
         };
     };
-    // I assume that all three of the above nested for loops could have been more easily done w/ a forEach or map, but I am not comfortable w/ them
+    // I assume that all three of the above nested for loops could have been more easily done w/ a forEach or map, but I was not comfortable w/ them yet
 
     // creating option elements
     for (i = 0; i < data.names.length; i++) {
