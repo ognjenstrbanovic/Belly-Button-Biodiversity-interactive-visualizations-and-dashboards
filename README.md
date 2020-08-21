@@ -1,4 +1,4 @@
-# interactive-visualizations-and-dashboards-challenge-Belly-Button-Biodiversity
+# Belly-Button-Biodiversity-interactive-visualizations-and-dashboards
 As the name suggests, an interactive dashboard will be built... interestingly, though, it will catalog "the microbes that colonize human navels", or belly buttons.  
 Step 1: use Plotly (a library built for use in multiple languages) for JS to do a whole host of operations...  
 First off, I used D3.js to read a JSON file. Then, I created a relatively long series of interactive horizontal bar charts that used the given dropdown menu's newly built functionality to diplay the top 10 OTUs - Operational Taxonomic Units - found in each individual. (The dashboard, of course, updates whenever the value in the dropdown is changed by the user.) After that, the task was to create interactive bubble charts for each sample (with a larger bubble, for instance, representing a greater OTU). And, finally, I was to display the "sample metadata", or each individual's demographic information, as a key-value pair.  
