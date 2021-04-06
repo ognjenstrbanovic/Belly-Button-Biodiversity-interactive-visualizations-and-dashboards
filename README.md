@@ -4,8 +4,11 @@ Step 1: use Plotly (a library built for use in multiple languages) for JS to do 
 First off, I used D3.js to read a JSON file. Then, I created a relatively long series of interactive horizontal bar charts that used the given dropdown menu's newly built functionality to diplay the top 10 OTUs - Operational Taxonomic Units - found in each individual. (The dashboard, of course, updates whenever the value in the dropdown is changed by the user.) After that, the task was to create interactive bubble charts for each sample (with a larger bubble, for instance, representing a greater OTU). And, finally, I was to display the "sample metadata", or each individual's demographic information, as a key-value pair.  
 Please view the result below:  
 
+---
+
 ![My Dashboard](https://github.com/ognjenstrbanovic/interactive-visualizations-and-dashboards-challenge/blob/master/Dashboard%20Page.jpg?raw=true)  
 
+---
 
 There was a bonus task that I was unable to complete, and that was to add a "gauge chart" (which can be found in the Plotly documentation). This was to plot the weekly scrubbing/washing frequency of each individual...  
 Anyway, still feeling fulfilled, I have deployed my "app to a free static page hosting service", GitHub Pages, and it can be viewed here: https://ognjenstrbanovic.github.io/interactive-visualizations-and-dashboards-challenge/. You may test the dropdown's new functionality, which is to update the dashboard every time.  
